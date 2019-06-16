@@ -4,10 +4,10 @@ class House
 {
 public:
 
-	virtual void buildWindows() = 0;
-	virtual void buildHardwoodFloor() = 0;
-	virtual void buildEnsuite() = 0;
-	virtual void buildHousePool() = 0;
+	int no_of_windows;
+	bool bHardWoodFloor;
+	bool bEnsuite;
+	bool bHousePool;
 };
 
 class HouseBuilder
@@ -16,6 +16,7 @@ protected:
 	std::unique_ptr<House> pHouse;
 
 public:
+	HouseBuilder();
 	virtual void constructWindows() = 0;
 	virtual void constructHardwoodFloor() = 0;
 	virtual void constructEnsuite() = 0;
