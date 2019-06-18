@@ -6,19 +6,47 @@
 #include "FactoryPattern.h"
 #include "AbstractFactory.h"
 #include "Builder.h"
+#include "Composite.h"
 
-// Start: Builder pattern
+//Composite Pattern
 int main()
 {
-	std::unique_ptr<HouseBuilder> pHouseBuilder(new SayemHouse());
-	std::unique_ptr<Director> pDirector(new Director(std::move(pHouseBuilder)));
+	std::unique_ptr<IEmployee> e1(new Employee("Deba", 1));
+	std::unique_ptr<IEmployee> e2(new Employee("Juth", 2));
+	std::unique_ptr<IEmployee> e3(new Employee("Adrita", 3));
 
-	std::unique_ptr<House> pHouse = std::move(pDirector->Construct());
-	if (pHouse)
-		std::cout << "windows is : " << pHouse->no_of_windows << std::endl << " Ensuite:" << (pHouse->bEnsuite ? "Yes" : "No") << std::endl
-		<<"HardWood: "<< (pHouse->bHardWoodFloor ? "yes" : "no")<<std::endl<<"House Pool: "<< (pHouse->bHousePool ? "yes" : "No");
+	std::unique_ptr<Manager> m1(new Manager("Boss"));
+
+	m1->AddSubordinate(std::move(e1));
+	m1->AddSubordinate(std::move(e2));
+
+	m1->GetDetails();
+
+	e3->GetDetails();
+
+	m1->RemoveSubordinate(2);
+
+	printf("\n\n\n");
+	m1->GetDetails();
 	return 0;
 }
+
+
+
+//End Composite Pattern
+
+// Start: Builder pattern
+//int main()
+//{
+//	std::unique_ptr<HouseBuilder> pHouseBuilder(new SayemHouse());
+//	std::unique_ptr<Director> pDirector(new Director(std::move(pHouseBuilder)));
+//
+//	std::unique_ptr<House> pHouse = std::move(pDirector->Construct());
+//	if (pHouse)
+//		std::cout << "windows is : " << pHouse->no_of_windows << std::endl << " Ensuite:" << (pHouse->bEnsuite ? "Yes" : "No") << std::endl
+//		<<"HardWood: "<< (pHouse->bHardWoodFloor ? "yes" : "no")<<std::endl<<"House Pool: "<< (pHouse->bHousePool ? "yes" : "No");
+//	return 0;
+//}
 
 // End: Builder pattern
 
