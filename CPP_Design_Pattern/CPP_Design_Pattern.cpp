@@ -8,18 +8,42 @@
 #include "Builder.h"
 #include "Composite.h"
 #include "Template.h"
+#include "Visitor.h"
 
 
-// Template design pattern
+// Visitor design pattern
+
 int main()
 {
-	std::unique_ptr<Game> g(new FootBall());
-	g->play();
-	g.reset(new Cricket());
-	printf("\n");
-	g->play();
+	std::shared_ptr<ConcreteVisitor> c = std::make_shared<ConcreteVisitor>();
+	std::unique_ptr<Burger> b(new Burger());
+	std::unique_ptr<Pizza> p(new Pizza());
+	std::vector<std::unique_ptr<Item>> orderedItems;
+	orderedItems.push_back(std::move(b));
+	orderedItems.push_back(std::move(p));
+
+	int totalCost = 0;
+	for (std::vector<std::unique_ptr<Item>>::iterator it = orderedItems.begin(); it != orderedItems.end(); ++it)
+	{
+		totalCost += it->get()->accept(c);
+	}
+
+	printf("Total ordered cost: %d", totalCost);
 	return 0;
 }
+
+//End of visitor design pattern
+
+// Template design pattern
+//int main()
+//{
+//	std::unique_ptr<Game> g(new FootBall());
+//	g->play();
+//	g.reset(new Cricket());
+//	printf("\n");
+//	g->play();
+//	return 0;
+//}
 
 
 //End Template design pattern
